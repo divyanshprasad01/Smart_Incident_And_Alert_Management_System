@@ -30,13 +30,12 @@ public class incident {
     @Column(nullable = false)
     private incident_status incidentStatus;
 
-    @Column(nullable = false)
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private user createdBy;
 
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
     private LocalDateTime updatedAt;
 
     public long getId() {

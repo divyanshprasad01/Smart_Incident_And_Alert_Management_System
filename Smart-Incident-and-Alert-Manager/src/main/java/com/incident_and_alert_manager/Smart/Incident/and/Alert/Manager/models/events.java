@@ -10,7 +10,6 @@ public class events {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "incident_id")
     private incident incidentId;
