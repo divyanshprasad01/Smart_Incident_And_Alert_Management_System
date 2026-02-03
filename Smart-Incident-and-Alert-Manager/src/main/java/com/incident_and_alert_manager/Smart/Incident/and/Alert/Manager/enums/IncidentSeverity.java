@@ -1,6 +1,6 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums;
 
-public enum incident_severity {
+public enum IncidentSeverity {
     Highly_Critical,
     Critical,
     Medium,

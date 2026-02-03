@@ -1,39 +1,39 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models;
 
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.incident_status;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentStatus;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "events")
-public class events {
+@Table(name = "Events")
+public class Events {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "incident_id")
-    private incident incidentId;
+    private Incident incidentId;
 
     @Column(nullable = false)
     private String action;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private incident_status incidentStatus;
+    private IncidentStatus incidentStatus;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public incident getIncidentId() {
+    public Incident getIncidentId() {
         return incidentId;
     }
 
-    public void setIncidentId(incident incidentId) {
+    public void setIncidentId(Incident incidentId) {
         this.incidentId = incidentId;
     }
 
@@ -45,11 +45,11 @@ public class events {
         this.action = action;
     }
 
-    public incident_status getIncidentStatus() {
+    public IncidentStatus getIncidentStatus() {
         return incidentStatus;
     }
 
-    public void setIncidentStatus(incident_status incidentStatus) {
+    public void setIncidentStatus(IncidentStatus incidentStatus) {
         this.incidentStatus = incidentStatus;
     }
 }

@@ -1,16 +1,16 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models;
 
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.user_roles;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.UserRoles;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class user {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -23,16 +23,16 @@ public class user {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private user_roles userRole;
+    private UserRoles userRole;
 
     @Column(nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,11 +60,11 @@ public class user {
         this.password = password;
     }
 
-    public user_roles getUserRole() {
+    public UserRoles getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(user_roles userRole) {
+    public void setUserRole(UserRoles userRole) {
         this.userRole = userRole;
     }
 

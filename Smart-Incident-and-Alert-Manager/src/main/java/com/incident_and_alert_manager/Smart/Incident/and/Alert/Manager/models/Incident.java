@@ -1,17 +1,17 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models;
 
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.incident_severity;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.incident_status;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentSeverity;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "incident")
-public class incident {
+@Table(name = "Incident")
+public class Incident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
@@ -24,25 +24,25 @@ public class incident {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private incident_severity severity;
+    private IncidentSeverity severity;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private incident_status incidentStatus;
+    private IncidentStatus incidentStatus;
 
 
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private user createdBy;
+    private User createdBy;
 
     @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
     private LocalDateTime updatedAt;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,27 +70,27 @@ public class incident {
         this.description = description;
     }
 
-    public incident_severity getSeverity() {
+    public IncidentSeverity getSeverity() {
         return severity;
     }
 
-    public void setSeverity(incident_severity severity) {
+    public void setSeverity(IncidentSeverity severity) {
         this.severity = severity;
     }
 
-    public incident_status getIncidentStatus() {
+    public IncidentStatus getIncidentStatus() {
         return incidentStatus;
     }
 
-    public void setIncidentStatus(incident_status incidentStatus) {
+    public void setIncidentStatus(IncidentStatus incidentStatus) {
         this.incidentStatus = incidentStatus;
     }
 
-    public user getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(user createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
