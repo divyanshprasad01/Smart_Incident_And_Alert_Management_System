@@ -13,9 +13,14 @@ public interface IncidentService {
                             String description,
                             IncidentSeverity incidentSeverity,
                             IncidentStatus incidentStatus,
-                            Long userId);
+                            Long userId) throws Exception;
 
     Incident getIncidentById(Long incidentId);
     List<Incident> getIncidentsByUser(User userId);
     List<Incident> getAllIncidents();
+
+    Incident acknowledgeIncident(Incident incident, String actionDescription) throws Exception;
+    Incident inProgressIncident(Incident incident, String actionDescription) throws Exception;
+    Incident resolvedIncident(Incident incident, String actionDescription) throws Exception;
+    Incident closedIncident(Incident incident, String actionDescription) throws Exception;
 }
