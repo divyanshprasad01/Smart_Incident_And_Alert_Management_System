@@ -3,12 +3,17 @@ package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentStatus;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "Events")
-public class Events {
+@Table(name = "Event")
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name= "created_at", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "incident_id")
