@@ -1,7 +1,6 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.controllers;
 
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.CreateIncidentDto;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.IncidentResponseDto;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.*;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Incident;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services.IncidentService;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,44 @@ public class IncidentController {
         );
         return mapToResponse(incident);
     }
+
+    @PostMapping("/{id}/acknowledge")
+    public IncidentResponseDto acknowledge(@PathVariable Long id,
+                                           @RequestBody AcknowledgeIncidentDto acknowledgeIncidentDto)
+                                            throws Exception {
+        Incident incident = incidentService.getIncidentById(id);
+        Incident acknowledgeIncident = incidentService.acknowledgeIncident(incident,acknowledgeIncidentDto.getMessage());
+        return mapToResponse(acknowledgeIncident);
+    }
+
+    @PostMapping("/{id}/inProgress")
+    public IncidentResponseDto inProgress(@PathVariable Long id,
+                                          @RequestBody InProgressIncidentDto inProgressIncidentDto)
+            throws Exception {
+        Incident incident = incidentService.getIncidentById(id);
+        Incident acknowledgeIncident = incidentService.inProgressIncident(incident,inProgressIncidentDto.getMessage());
+        return mapToResponse(acknowledgeIncident);
+    }
+
+    @PostMapping("/{id}/resolved")
+    public IncidentResponseDto resolved(@PathVariable Long id,
+                                           @RequestBody ResolvedIncidentDto resolvedIncidentDto)
+            throws Exception {
+        Incident incident = incidentService.getIncidentById(id);
+        Incident acknowledgeIncident = incidentService.resolvedIncident(incident, resolvedIncidentDto.getMessage());
+        return mapToResponse(acknowledgeIncident);
+    }
+
+
+    @PostMapping("/{id}/closed")
+    public IncidentResponseDto closed(@PathVariable Long id,
+                                      @RequestBody CloseIncidentDto closeIncidentDto)
+            throws Exception {
+        Incident incident = incidentService.getIncidentById(id);
+        Incident acknowledgeIncident = incidentService.closedIncident(incident,closeIncidentDto.getMessage());
+        return mapToResponse(acknowledgeIncident);
+    }
+
 
     @GetMapping("/{id}")
     public IncidentResponseDto getIncidentByIncidentId(@PathVariable Long id) throws Exception {

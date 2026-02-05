@@ -73,10 +73,6 @@ public class IncidentServiceImpl implements IncidentService{
 
     @Override
     public Incident inProgressIncident(Incident incident, String actionDescription) throws Exception{
-        if(!incident.getIncidentStatus().equals(IncidentStatus.Created) ||
-                !incident.getIncidentStatus().equals(IncidentStatus.Acknowledged)){
-            throw new Exception("Incident Not Created!!!");
-        }
         eventsService.createEvent(incident, actionDescription, IncidentStatus.In_Progress);
         incident.setIncidentStatus(IncidentStatus.In_Progress);
         return incidentRepository.save(incident);
@@ -91,10 +87,6 @@ public class IncidentServiceImpl implements IncidentService{
 
     @Override
     public Incident closedIncident(Incident incident, String actionDescription) throws Exception{
-        if(!incident.getIncidentStatus().equals(IncidentStatus.In_Progress) ||
-                !incident.getIncidentStatus().equals(IncidentStatus.Resolved)){
-            throw new Exception("Incident Not Resolved!!!");
-        }
         eventsService.createEvent(incident, actionDescription, IncidentStatus.Closed);
         incident.setIncidentStatus(IncidentStatus.Closed);
         return incidentRepository.save(incident);
