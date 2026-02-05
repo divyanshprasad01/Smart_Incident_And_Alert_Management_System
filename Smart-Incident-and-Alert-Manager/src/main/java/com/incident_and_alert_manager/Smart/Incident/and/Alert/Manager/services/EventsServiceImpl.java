@@ -32,7 +32,7 @@ public class EventsServiceImpl implements EventsService{
 
     @Override
     public List<Event> getEventsByIncident(Incident incident) {
-        List<Event> eventsOfIncident = eventsRepository.findByIncidentId(incident.getId());
+        List<Event> eventsOfIncident = eventsRepository.findByIncidentId(incident);
 
         return eventsOfIncident;
     }

@@ -2,6 +2,7 @@ package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services
 
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentSeverity;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentStatus;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Event;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Incident;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.User;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.repository.IncidentRepository;
@@ -91,5 +92,12 @@ public class IncidentServiceImpl implements IncidentService{
         incident.setIncidentStatus(IncidentStatus.Closed);
         return incidentRepository.save(incident);
     }
+
+    @Override
+    public List<Event> getAllEventsOfIncident(Incident incident){
+        List<Event> allEventsOfIncident = eventsService.getEventsByIncident(incident);
+        return allEventsOfIncident;
+    }
+
 
 }

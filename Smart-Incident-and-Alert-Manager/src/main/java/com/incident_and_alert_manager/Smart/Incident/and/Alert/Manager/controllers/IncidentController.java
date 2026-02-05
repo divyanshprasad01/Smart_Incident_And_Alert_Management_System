@@ -1,6 +1,7 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.controllers;
 
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.*;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Event;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Incident;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services.IncidentService;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +83,17 @@ public class IncidentController {
         return incidentResponseDtos;
     }
 
+    @GetMapping("{id}/events")
+    public List<EventsDto> EventsOfIncident(@PathVariable Long id){
+        Incident incident = incidentService.getIncidentById(id);
+        List<Event> events = incidentService.getAllEventsOfIncident(incident);
+        List<EventsDto> eventsDtos = new ArrayList<>();
+        for(Event event : events) {
+            eventsDtos.add(mapToEvent(event));
+        }
+        return eventsDtos;
+    }
+
 //    @GetMapping
 //    public List<IncidentResponseDto> getIncidentsByUserId(Long userId) throws Exception {
 //        List<Incident> incidents = incidentService.getIncidentsByUser(userId);
@@ -104,6 +116,14 @@ public class IncidentController {
         incidentResponseDto.setLastUpdatedDateTime(incident.getUpdatedAt());
 
         return incidentResponseDto;
+    }
+
+    private EventsDto mapToEvent(Event event) {
+        EventsDto eventDto = new EventsDto();
+        eventDto.setId(event.getId());
+        eventDto.setMessage(event.getAction());
+        eventDto.setIncidentStatus(event.getIncidentStatus());
+        return eventDto;
     }
 
 
