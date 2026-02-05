@@ -12,7 +12,6 @@ public interface IncidentService {
     Incident createIncident(String subject,
                             String description,
                             IncidentSeverity incidentSeverity,
-                            IncidentStatus incidentStatus,
                             Long userId) throws Exception;
 
     Incident getIncidentById(Long incidentId);

@@ -12,20 +12,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name" ,nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "user_email" ,nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "user_password" ,nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "user_role" ,nullable = false)
     private UserRoles userRole;
 
-    @Column(nullable = false, updatable = false, insertable = false)
+    @Column(name = "user_created_at" , nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
     public Long getId() {

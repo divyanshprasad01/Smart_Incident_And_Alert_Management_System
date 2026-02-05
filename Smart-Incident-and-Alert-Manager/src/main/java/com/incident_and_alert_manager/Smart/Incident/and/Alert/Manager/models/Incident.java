@@ -13,21 +13,21 @@ public class Incident {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false, insertable = false)
+    @Column(name = "created_at" ,nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column(name = "subject" ,nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Column(name = "description" ,nullable = false)
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "severity" ,nullable = false)
     private IncidentSeverity severity;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "incident_status" ,nullable = false)
     private IncidentStatus incidentStatus;
 
 

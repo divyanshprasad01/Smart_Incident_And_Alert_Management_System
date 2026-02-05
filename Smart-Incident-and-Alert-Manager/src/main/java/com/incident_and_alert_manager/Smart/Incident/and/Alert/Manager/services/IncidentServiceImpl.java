@@ -25,7 +25,7 @@ public class IncidentServiceImpl implements IncidentService{
 
     @Override
     public Incident createIncident(String subject, String description, IncidentSeverity incidentSeverity,
-                                   IncidentStatus incidentStatus, Long userId) throws Exception{
+                                    Long userId) throws Exception{
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!!!"));
 
         Incident incident = new Incident();
