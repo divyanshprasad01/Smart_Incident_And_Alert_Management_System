@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "Event")
+@Table(name = "events")
 public class Event {
 
     @Id
@@ -24,10 +24,10 @@ public class Event {
     @JoinColumn(name = "incident_id")
     private Incident incidentId;
 
-    @Column(nullable = false)
+    @Column(name = "action_description" ,nullable = false)
     private String action;
 
-    @Column
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private IncidentStatus incidentStatus;
 

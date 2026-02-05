@@ -3,17 +3,20 @@ package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentSeverity;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.enums.IncidentStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Incident")
+@Table(name = "incident")
 public class Incident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "created_at" ,nullable = false, updatable = false, insertable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "subject" ,nullable = false)
@@ -36,6 +39,7 @@ public class Incident {
     private User createdBy;
 
     @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     public Long getId() {
