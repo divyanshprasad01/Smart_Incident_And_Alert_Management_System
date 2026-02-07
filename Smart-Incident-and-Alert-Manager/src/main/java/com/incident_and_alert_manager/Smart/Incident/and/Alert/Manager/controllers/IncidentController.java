@@ -4,6 +4,7 @@ import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.*;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Event;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.Incident;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services.IncidentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class IncidentController {
     }
 
     @PostMapping
-    public IncidentResponseDto createIncident(@RequestBody CreateIncidentDto createIncidentDto) throws Exception {
+    public IncidentResponseDto createIncident(@Valid @RequestBody CreateIncidentDto createIncidentDto) throws Exception {
         Incident incident = incidentService.createIncident(
                 createIncidentDto.getSubject(),
                 createIncidentDto.getDescription(),
@@ -31,7 +32,7 @@ public class IncidentController {
 
     @PostMapping("/{id}/acknowledge")
     public IncidentResponseDto acknowledge(@PathVariable Long id,
-                                           @RequestBody AcknowledgeIncidentDto acknowledgeIncidentDto)
+                                           @Valid @RequestBody AcknowledgeIncidentDto acknowledgeIncidentDto)
                                             throws Exception {
         Incident incident = incidentService.getIncidentById(id);
         Incident acknowledgeIncident = incidentService.acknowledgeIncident(incident,acknowledgeIncidentDto.getMessage());
@@ -40,7 +41,7 @@ public class IncidentController {
 
     @PostMapping("/{id}/inProgress")
     public IncidentResponseDto inProgress(@PathVariable Long id,
-                                          @RequestBody InProgressIncidentDto inProgressIncidentDto)
+                                          @Valid @RequestBody InProgressIncidentDto inProgressIncidentDto)
             throws Exception {
         Incident incident = incidentService.getIncidentById(id);
         Incident acknowledgeIncident = incidentService.inProgressIncident(incident,inProgressIncidentDto.getMessage());
@@ -49,7 +50,7 @@ public class IncidentController {
 
     @PostMapping("/{id}/resolved")
     public IncidentResponseDto resolved(@PathVariable Long id,
-                                           @RequestBody ResolvedIncidentDto resolvedIncidentDto)
+                                           @Valid @RequestBody ResolvedIncidentDto resolvedIncidentDto)
             throws Exception {
         Incident incident = incidentService.getIncidentById(id);
         Incident acknowledgeIncident = incidentService.resolvedIncident(incident, resolvedIncidentDto.getMessage());
@@ -59,7 +60,7 @@ public class IncidentController {
 
     @PostMapping("/{id}/closed")
     public IncidentResponseDto closed(@PathVariable Long id,
-                                      @RequestBody CloseIncidentDto closeIncidentDto)
+                                      @Valid @RequestBody CloseIncidentDto closeIncidentDto)
             throws Exception {
         Incident incident = incidentService.getIncidentById(id);
         Incident acknowledgeIncident = incidentService.closedIncident(incident,closeIncidentDto.getMessage());
