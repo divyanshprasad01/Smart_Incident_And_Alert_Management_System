@@ -1,11 +1,18 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.controllers;
 
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.Components.JwtUtil;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.AuthResponseDto;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserDetailsDto;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserLoginDto;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserSignUpDto;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.User;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +25,13 @@ public class AuthController {
 
     @Autowired
     private UserServiceImpl userService;
+    private AuthenticationManager authenticationManager;
+    private JwtUtil jwtUtil;
+
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/signup")
     public UserDetailsDto signup(@RequestBody UserSignUpDto userSignUpDto) {
@@ -28,13 +42,18 @@ public class AuthController {
 
         return mapUserDetails(user);
     }
-//
-//    @PostMapping("/login")
-//    public UserDetailsDto login(@RequestBody UserLoginDto userLoginDto) {
-//        User user = userService.authenticateUser(userLoginDto.getEmail(), userLoginDto.getPassword());
-//        return mapUserDetails(user);
-//    }
-//
+
+    @PostMapping("/login")
+    public AuthResponseDto login(@RequestBody UserLoginDto userLoginDto) {
+        Authentication authentication =  authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword())
+        );
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String jwtToken = jwtUtil.generateJwtToken(userDetails);
+        return new AuthResponseDto(jwtToken);
+    }
+
 
     private UserDetailsDto mapUserDetails(User user) {
         UserDetailsDto userDetailsDto = new UserDetailsDto();

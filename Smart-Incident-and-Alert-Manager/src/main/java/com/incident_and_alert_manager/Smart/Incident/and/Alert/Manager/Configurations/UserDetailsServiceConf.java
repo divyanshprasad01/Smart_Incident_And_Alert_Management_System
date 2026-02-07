@@ -1,4 +1,4 @@
-package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.configurations;
+package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.Configurations;
 
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.repository.UserRepository;
 import org.jspecify.annotations.NullMarked;
