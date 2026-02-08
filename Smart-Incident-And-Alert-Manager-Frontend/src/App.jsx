@@ -1,15 +1,17 @@
 import { useState } from 'react'
 
-import './App.css'
+import AuthPage from './Pages/AuthPage'
+import Navbar from './Components/NavBar';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      
+    <Navbar />
+    <AuthPage />
     </>
-  )
+  );
 }
 
 export default App
