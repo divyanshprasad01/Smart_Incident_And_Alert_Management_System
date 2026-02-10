@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+// JPA Repository to run quires in database using Hibernate.
 public interface IncidentRepository extends JpaRepository<Incident, Long> {
     List<Incident> findByIncidentStatus(IncidentStatus incidentStatus);
     List<Incident> findBySeverity(IncidentSeverity severity);

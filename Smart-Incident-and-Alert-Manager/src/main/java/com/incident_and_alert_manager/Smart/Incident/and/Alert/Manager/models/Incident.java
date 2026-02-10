@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+//Incident entity or model, it is based on dbColumn incident
 @Entity
 @Table(name = "incident")
 public class Incident {
@@ -33,14 +34,21 @@ public class Incident {
     @Column(name = "incident_status" ,nullable = false)
     private IncidentStatus incidentStatus;
 
-
+//  Many to one annotation defines that it is a foreign key with
+//  relation to the table User and one user can create many incidents.
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
 
+//  Update timestamp defines that it is auto generated and auto updated,
+//  we cannot use Generated value annotation here as it is only for primary keys.
     @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
+//  As I have not annotated this class with lombok getter and setter
+//  I have generated all getter and setter with the help of IDE, I don't want to touch it now at this stage.
 
     public Long getId() {
         return id;

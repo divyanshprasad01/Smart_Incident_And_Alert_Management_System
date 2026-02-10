@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Incident controller which uses path ../incidents/ and takes data using DTO's
 @RestController
 @RequestMapping("/incidents")
 public class IncidentController {
@@ -104,6 +105,9 @@ public class IncidentController {
 //        }
 //        return incidentResponseDtos;
 //    }
+
+
+//  Maps the data to DTO's to respond in the same manner.
 
     private IncidentResponseDto mapToResponse(Incident incident) {
         IncidentResponseDto incidentResponseDto = new IncidentResponseDto();

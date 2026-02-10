@@ -1,0 +1,3 @@
+DTO's are data transfer object it sits on controller level to get data from user
+in a structured manner so that it is easily mappable and wrong type of data and other restrictions can
+be rejected at controller level.

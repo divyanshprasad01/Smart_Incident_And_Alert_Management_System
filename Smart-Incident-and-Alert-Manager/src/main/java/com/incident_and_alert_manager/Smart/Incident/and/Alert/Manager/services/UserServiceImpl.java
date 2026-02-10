@@ -10,24 +10,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+//Main user service to create, fetch, authenticate users.
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private final UserRepository userRepository;
     private AuthenticationManager authenticationManager;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
+//  password encoder so users password are saved in encrypted form in db.
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+//  Constructor for spring boot injection.
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
+//   Takes user signup form data and sets it in user entity and stores it in database.
     @Override
     public User createUser(String name, String email, String password, UserRoles role) {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
+//      encoding user password before storing in database.
         user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setIsAccountLocked(false);
         user.setIsPasswordExpired(false);
@@ -35,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+//  Authenticates user with basic authentication using email password which will be used later to generate JWT.
     @Override
     public User authenticateUser(String email, String password) {
             Authentication authentication = authenticationManager.authenticate(
@@ -49,6 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+//  Below are the methods to fetch a user by id or email.
     @Override
     public User getUserByID(Long id) {
         return userRepository.getReferenceById(id);

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "events")
+//Event model or entity with the table named events in db.
 public class Event {
 
     @Id
@@ -20,6 +21,7 @@ public class Event {
     @Column(name= "created_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
+//  For this field many to one as this field is a foreign key and one incident can have many entries here.
     @ManyToOne
     @JoinColumn(name = "incident_id")
     private Incident incidentId;
@@ -28,6 +30,7 @@ public class Event {
     private String action;
 
     @Column(name = "status")
+//  For this field a set of values are defined anything else is not acceptable.
     @Enumerated(EnumType.STRING)
     private IncidentStatus incidentStatus;
 

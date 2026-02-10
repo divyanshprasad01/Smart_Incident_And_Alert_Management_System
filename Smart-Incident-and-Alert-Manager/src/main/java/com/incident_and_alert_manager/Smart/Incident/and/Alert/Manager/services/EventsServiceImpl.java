@@ -12,28 +12,27 @@ import java.util.List;
 public class EventsServiceImpl implements EventsService{
     private final EventsRepository eventsRepository;
 
+    //Takes the repository bean for database connectivity using hibernate and JDBC.
     public EventsServiceImpl(EventsRepository eventsRepository) {
         this.eventsRepository = eventsRepository;
     }
 
     @Override
-    public Event createEvent(Incident incident, String actionDescription, IncidentStatus incidentStatus) throws Exception {
+    public Event createEvent(Incident incident, String actionDescription, IncidentStatus incidentStatus) {
+        //Initializing an event entity to pass it in database.
         Event event = new Event();
         event.setAction(actionDescription);
         event.setIncidentId(incident);
         event.setIncidentStatus(incidentStatus);
 
-        Event createdEvent = eventsRepository.save(event);
-        if (createdEvent == null)
-            throw new Exception("Event creation failed!!! Some Error Occurred, please check values entered.");
-
-        return createdEvent;
+        return eventsRepository.save(event);
     }
 
+    //Passing incident object here and not Id because I have defined Incident as foreign key in Events entity
+    //It will map it automatically.
     @Override
     public List<Event> getEventsByIncident(Incident incident) {
-        List<Event> eventsOfIncident = eventsRepository.findByIncidentId(incident);
-
-        return eventsOfIncident;
+        //Passing the foreign key incident to fetch the results from repository Hibernate will automatically handle this.
+        return eventsRepository.findByIncidentId(incident);
     }
 }
