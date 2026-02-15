@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function SignUp({ onSwitchForm }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

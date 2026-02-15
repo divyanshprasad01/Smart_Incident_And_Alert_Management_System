@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function ForgotPassword({ onSwitchForm }) {
   
   const [email, setEmail] = useState("");
