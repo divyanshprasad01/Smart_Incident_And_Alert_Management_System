@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+//Endpoint for authentication of a user using spring security
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -28,11 +29,13 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     private JwtUtil jwtUtil;
 
+//  Constructor for injecting beans.
     public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 
+//  This just takes a User Signup form and passes it to create user method in userService to save a new user in db.
     @PostMapping("/signup")
     public UserDetailsDto signup(@RequestBody UserSignUpDto userSignUpDto) {
         User user = userService.createUser(userSignUpDto.getName(),
@@ -43,6 +46,7 @@ public class AuthController {
         return mapUserDetails(user);
     }
 
+//  It uses basic email password login method and then generates a jwt token which is valid for  2 hour and gives it to user.
     @PostMapping("/login")
     public AuthResponseDto login(@RequestBody UserLoginDto userLoginDto) {
         Authentication authentication =  authenticationManager.authenticate(

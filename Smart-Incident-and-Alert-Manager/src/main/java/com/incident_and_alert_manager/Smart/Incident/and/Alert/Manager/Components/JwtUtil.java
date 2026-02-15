@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+//Simple Components class for implementing jwt, some basic tools or methods to generate, validate, etc token.
 @Component
 public class JwtUtil {
     private static final String SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256).toString();
