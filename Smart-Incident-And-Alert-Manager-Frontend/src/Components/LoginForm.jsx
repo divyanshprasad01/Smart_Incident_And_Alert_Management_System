@@ -1,4 +1,9 @@
 export default function Login({ onSwitchForm }) {
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
   return (
     <>
       <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
@@ -9,6 +14,8 @@ export default function Login({ onSwitchForm }) {
           <input
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -18,6 +25,8 @@ export default function Login({ onSwitchForm }) {
           <input
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <span onClick={() => onSwitchForm("forgotPassword")} className="block text-right w-full text-sm mt-1 text-blue-600 cursor-pointer hover:underline">

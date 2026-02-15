@@ -1,4 +1,8 @@
 export default function ForgotPassword({ onSwitchForm }) {
+  
+  const [email, setEmail] = useState("");
+
+
   return (
     <>
       <h2 className="text-2xl font-bold text-center mb-6">Forgot Password ?</h2>
@@ -9,6 +13,8 @@ export default function ForgotPassword({ onSwitchForm }) {
           <input
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
