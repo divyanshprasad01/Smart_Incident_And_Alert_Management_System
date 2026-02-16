@@ -120,6 +120,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.SmartIncidentAndAlertManagerApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
