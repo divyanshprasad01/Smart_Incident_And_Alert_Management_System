@@ -1,10 +1,35 @@
 import { useState } from "react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 export default function SignUp({ onSwitchForm }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {      
+      const response = await api.post("/auth/signup", 
+      { 
+        name : name,
+        email: email,
+        password: password,
+        userRole: "Admin"
+      });
+
+      toast.success("Account created successfully!");
+      onSwitchForm("login");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to create account");
+    } 
+  }
 
 
   return (
@@ -57,6 +82,7 @@ export default function SignUp({ onSwitchForm }) {
 
         <button
           type="submit"
+          onClick={handleSubmit}
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
         >
           Sign Up
