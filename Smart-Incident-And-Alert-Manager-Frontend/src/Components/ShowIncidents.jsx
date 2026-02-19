@@ -24,13 +24,15 @@ export default function ShowIncidents({setActiveTab}) {
      const getSeverityColor = (severity) => {
     switch (severity) {
       case "Highly_Critical":
-        return "bg-red-100 text-red-600"
+        return "bg-red-200 text-red-800"
       case "Critical":
-        return "bg-yellow-100 text-yellow-600"
+        return "bg-red-100 text-red-600"
       case "Medium":
-        return "bg-green-100 text-green-600"
-      default:
+        return "bg-yellow-100 text-yellow-600"
+      case "Low":
         return "bg-gray-100 text-gray-600"
+      default:
+        return "bg-green-100 text-green-600"
     }
   }
 

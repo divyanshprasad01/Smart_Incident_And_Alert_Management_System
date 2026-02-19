@@ -58,6 +58,13 @@ public class AuthController {
         return new AuthResponseDto(jwtToken);
     }
 
+//    Need to implement this function later.
+//    @PostMapping
+//    public Long getUserId(@RequestBody String JwtToken) {
+//        Long userId = jwtUtil.extractUsername(JwtToken);
+//        return userId;
+//    }
+
 
     private UserDetailsDto mapUserDetails(User user) {
         UserDetailsDto userDetailsDto = new UserDetailsDto();
