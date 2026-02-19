@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import api from "../Api/axios"; 
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
-export default function ShowIncidents({setActiveTab}) {
+export default function ShowIncidents() {
     const [incidents, setIncidents] = useState([])
+    const navigate = useNavigate();
 
     useEffect( () => {
         const oneTimeFetch = async () => {
@@ -24,13 +26,15 @@ export default function ShowIncidents({setActiveTab}) {
      const getSeverityColor = (severity) => {
     switch (severity) {
       case "Highly_Critical":
-        return "bg-red-100 text-red-600"
+        return "bg-red-200 text-red-800"
       case "Critical":
-        return "bg-yellow-100 text-yellow-600"
+        return "bg-red-100 text-red-600"
       case "Medium":
-        return "bg-green-100 text-green-600"
-      default:
+        return "bg-yellow-100 text-yellow-600"
+      case "Low":
         return "bg-gray-100 text-gray-600"
+      default:
+        return "bg-green-100 text-green-600"
     }
   }
 
@@ -55,7 +59,7 @@ export default function ShowIncidents({setActiveTab}) {
           </h1>
           <button
           type="create"
-          onClick={() => setActiveTab("createIncident")}
+          onClick={() => navigate("createNewIncident")}
           className=" bg-blue-600 text-white mb-6 py-2 px-4 rounded-md hover:bg-blue-700 transition"
         >
           Create Incident +
@@ -80,7 +84,8 @@ export default function ShowIncidents({setActiveTab}) {
               {incidents.map((incident) => (
                 <tr
                   key={incident.id}
-                  className="border-t hover:bg-slate-50 transition"
+                  onClick={() => navigate(`incidentEvents/${incident.id}`)}
+                  className="border-t hover:bg-slate-50 transition cursor-pointer"
                 >
                   <td className="p-3 font-medium">{incident.id}</td>
                 <td className="p-3 text-gray-500 text-sm">{incident.creationDateTime}</td>

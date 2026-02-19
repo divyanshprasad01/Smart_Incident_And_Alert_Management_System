@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/auth/*" element={<AuthPage />} />
         <Route path="/*" element={<Navigate to="/auth" replace />} />
-        <Route path="/incidents" element={<Incidents />} />
+        <Route path="/incidents/*" element={<Incidents />} />
       </Routes>
     </div>
   );
