@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios"; 
+import api from "../Api/axios"; 
 import toast from "react-hot-toast";
 
 export default function Login({ onSwitchForm }) {
