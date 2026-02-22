@@ -20,6 +20,11 @@ export default function IncidentEvents() {
   const [incidentStatus, setIncidentStatus] = useState("Created");
   // Holds the list of events associated with the incidents.
   const [events, setEvents] = useState([]);
+  // for handling the editing based on the edit button.
+  const [EditingMode, setEditingMode] = useState(true);
+  // for handling the action message.
+  const [actionMessage, setActionMessage] = useState("");
+  const [editModeStatus, setEditModeStatus] = useState(incidentStatus);
 
   // useEffect to fetch incident details and associated events when the component is populated, it automatically triggeres when the component is rendered.
   useEffect(() => {
@@ -75,13 +80,24 @@ export default function IncidentEvents() {
       case "Created":
         return "bg-blue-100 text-blue-600";
       case "In_Progress":
-        return "bg-purple-100 text-purple-600";
+        return "bg-yellow-100 text-yellow-600";
       case "Resolved":
         return "bg-green-100 text-green-600";
       default:
         return "bg-gray-100 text-gray-600";
     }
   };
+
+
+// function to handle save an event for the incident when the save event button is clicked in the edit mode.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Sending a POST request to the backend API to create a new event for the incident with the required body.
+    } catch (error) {
+      toast.error("Failed to save event");
+    }
+}
 
   return (
     // Main page container with some styling using tailwind CSS.
@@ -93,13 +109,29 @@ export default function IncidentEvents() {
           {/* Heading with the incident ID */}
           <h1 className="text-2xl font-bold mb-6">Incident ID: {incidentId}</h1>
           {/* Button to show all incidents later will be replaced with edit button for editing  */}
-          <button
-            type="button"
-            onClick={() => navigate("/incidents")}
-            className=" bg-blue-600 text-white mb-6 py-2 px-4 rounded-md hover:bg-blue-700 transition"
-          >
-            Show Open Incidents
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setEditingMode(true)}
+              className={`${EditingMode ? "hidden" : "block"} bg-blue-600 text-white mb-6 py-2 px-4 rounded-md hover:bg-blue-700 transition`}
+            >
+              Make an Action
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className={`${EditingMode ? "block" : "hidden"} bg-blue-600 text-white mb-6 py-2 px-4 rounded-md hover:bg-blue-700 transition`}
+            >
+              Save Event
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditingMode(false)}
+              className={`${EditingMode ? "block" : "hidden"} bg-blue-600 text-white mb-6 py-2 px-4 rounded-md hover:bg-blue-700 transition`}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
         {/* A disabled form for now which holds the incident details for showing later will enable it using edit button. */}
         <form className="space-y-6">
@@ -111,7 +143,7 @@ export default function IncidentEvents() {
               disabled={true}
               placeholder="Loading subject..."
               value={subject}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -125,7 +157,7 @@ export default function IncidentEvents() {
               disabled={true}
               placeholder="Loading description..."
               value={description}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           {/* Created By and Created At */}
@@ -139,7 +171,7 @@ export default function IncidentEvents() {
                 disabled={true}
                 placeholder="Loading created by..."
                 value={createdBy}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="flex-1">
@@ -151,7 +183,7 @@ export default function IncidentEvents() {
                 disabled={true}
                 placeholder="Loading created at..."
                 value={createdAt}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="flex-1">
@@ -163,7 +195,7 @@ export default function IncidentEvents() {
                 disabled={true}
                 placeholder="Loading last updated at..."
                 value={updatedAt}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -180,16 +212,34 @@ export default function IncidentEvents() {
             />
           </div>
 
+          {/* Action Message */}
+          <div className={`${(EditingMode)? "block" : "hidden"}`}>
+            <label className="block text-sm font-medium mb-2">
+              Action Message
+            </label>
+            <textarea
+              rows="4"
+              disabled={false}
+              placeholder="Enter any message here for the action..."
+              onChange={(e) => setActionMessage(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
           {/* Status */}
           <div>
             <label className="block text-sm font-medium mb-2">Status</label>
-            <input
-              type="text"
-              disabled={true}
-              placeholder="Loading status..."
-              value={incidentStatus}
-              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${getStatusColor(incidentStatus)}`}
-            />
+            <select
+              value={(EditingMode)? editModeStatus : incidentStatus}
+              disabled={(!EditingMode)}
+              onChange={(e) => setEditModeStatus(e.target.value)}
+              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${(EditingMode)? getStatusColor(editModeStatus) : getStatusColor(incidentStatus)}`}
+            >
+              <option className="bg-gray-100 text-gray-600"  value="Acknowledged">ACKNOWLEDGED</option>
+              <option className="bg-yellow-100 text-yellow-600" value="In_Progress">IN PROGRESS</option>
+              <option className="bg-green-100 text-green-600"  value="Resolved">RESOLVED</option>
+              <option className="bg-red-200 text-red-800" value="Closed">CLOSED</option>
+            </select>
           </div>
         </form>
 
