@@ -1,6 +1,8 @@
 import { useState } from "react";
 import api from "../Api/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Login form component
 export default function Login({ onSwitchForm }) {
@@ -8,10 +10,26 @@ export default function Login({ onSwitchForm }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in by checking if authToken exists in localStorage
+    const authtoken = localStorage.getItem("authToken");
+    if (authtoken) {
+      navigate("/incidents"); // Redirect to dashboard if already logged in
+      toast.success("Welcome back!! You are already logged in. Redirecting to dashboard...");
+    }
+  }, [navigate]);
+
   // Handle form submission for login.
   const handleSubmit = async (e) => {
     // Prevents the default form submission behavior, which would cause a page reload.
     e.preventDefault();
+    if (!email || !password) {
+      toast.error("Please fill in both email and password.");
+      return;
+    }
+
     try {
       // Using axios to send a POST request to the login endpoint with the required body.
       const response = await api.post("/auth/login", { email, password });
@@ -21,6 +39,8 @@ export default function Login({ onSwitchForm }) {
       localStorage.setItem("authToken", token);
       // displays a success toast using react hot toast to inform the user that login was successful.
       toast.success("Login successful!");
+      // Navigates the user to the dashboard page after successful login.
+      navigate("/incidents");
     } catch (error) {
       // Shows any errors using error toast and logs them to console for debugging.
       console.error("Login error:", error); // Debugging log
