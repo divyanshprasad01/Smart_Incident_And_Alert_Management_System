@@ -21,7 +21,7 @@ export default function IncidentEvents() {
   // Holds the list of events associated with the incidents.
   const [events, setEvents] = useState([]);
   // for handling the editing based on the edit button.
-  const [EditingMode, setEditingMode] = useState(true);
+  const [EditingMode, setEditingMode] = useState(false);
   // for handling the action message.
   const [actionMessage, setActionMessage] = useState("");
   const [editModeStatus, setEditModeStatus] = useState(incidentStatus);
@@ -161,7 +161,7 @@ export default function IncidentEvents() {
             />
           </div>
           {/* Created By and Created At */}
-          <div className="flex w-full gap-4 ">
+          <div className={`flex w-full gap-4 ${EditingMode ? "hidden" : "block"}`}>
             <div className="flex-1">
               <label className="block text-sm font-medium mb-2">
                 Created By
@@ -235,6 +235,7 @@ export default function IncidentEvents() {
               onChange={(e) => setEditModeStatus(e.target.value)}
               className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${(EditingMode)? getStatusColor(editModeStatus) : getStatusColor(incidentStatus)}`}
             >
+              <option className="bg-blue-100 text-blue-600"  value="Created">CREATED</option>
               <option className="bg-gray-100 text-gray-600"  value="Acknowledged">ACKNOWLEDGED</option>
               <option className="bg-yellow-100 text-yellow-600" value="In_Progress">IN PROGRESS</option>
               <option className="bg-green-100 text-green-600"  value="Resolved">RESOLVED</option>
