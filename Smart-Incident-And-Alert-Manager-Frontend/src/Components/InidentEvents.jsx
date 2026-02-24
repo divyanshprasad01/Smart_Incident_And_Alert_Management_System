@@ -27,9 +27,7 @@ export default function IncidentEvents() {
   const [editModeStatus, setEditModeStatus] = useState(incidentStatus);
 
   // useEffect to fetch incident details and associated events when the component is populated, it automatically triggeres when the component is rendered.
-  useEffect(() => {
-    // async function.
-    const fetchIncidentDetails = async () => {
+  const fetchIncidentDetails = async () => {
       try {
         // Fetch the incident details using the incident ID from the backend API notice we are not using complete URL because we have already configured the base URL in the axios.
         const incidentResponse = await api.get(`/incidents/${incidentId}`);
@@ -56,6 +54,8 @@ export default function IncidentEvents() {
         toast.error("Failed to fetch incident events");
       }
     };
+  useEffect(() => {
+    // async function.
     fetchIncidentDetails();
   }, [incidentId]);
 
@@ -93,7 +93,31 @@ export default function IncidentEvents() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Sending a POST request to the backend API to create a new event for the incident with the required body.
+      e.preventDefault();
+      var targetEndpoint;
+      switch (editModeStatus) {
+        case "Acknowledged":
+          targetEndpoint = `/incidents/${incidentId}/acknowledge`;
+          break;
+        case "In_Progress":
+          targetEndpoint = `/incidents/${incidentId}/inProgress`;
+          break;
+        case "Resolved":
+          targetEndpoint = `/incidents/${incidentId}/resolved`;
+          break;
+        case "Closed":
+          targetEndpoint = `/incidents/${incidentId}/closed`;
+          break;
+        default:
+          targetEndpoint = `/incidents/${incidentId}/acknowledge`;
+      }
+
+      const eventResponse = await api.post(targetEndpoint, 
+      {message: actionMessage});
+      await fetchIncidentDetails();
+      toast.success("Event saved successfully");
+      setEditingMode(false);
+
     } catch (error) {
       toast.error("Failed to save event");
     }
@@ -239,7 +263,7 @@ export default function IncidentEvents() {
               <option className="bg-gray-100 text-gray-600"  value="Acknowledged">ACKNOWLEDGED</option>
               <option className="bg-yellow-100 text-yellow-600" value="In_Progress">IN PROGRESS</option>
               <option className="bg-green-100 text-green-600"  value="Resolved">RESOLVED</option>
-              <option className="bg-red-200 text-red-800" value="Closed">CLOSED</option>
+              <option className="bg-gray-100 text-gray-800" value="Closed">CLOSED</option>
             </select>
           </div>
         </form>
