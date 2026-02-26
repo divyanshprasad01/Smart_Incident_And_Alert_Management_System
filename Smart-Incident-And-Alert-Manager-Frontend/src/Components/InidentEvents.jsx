@@ -59,6 +59,21 @@ export default function IncidentEvents() {
     fetchIncidentDetails();
   }, [incidentId]);
 
+// Helper function to fix time zones and display the local time insted of UTC which is sent by the backend API.
+  const formatDateTime = (dateTimeString) => {
+    if(!dateTimeString) return "N/A"; // Handle null or undefined values
+    // Append 'Z' to indicate that the time is in UTC and create a Date object.
+    const date = new Date(dateTimeString + "Z");
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }); // This will convert the UTC time to local time based on the user's browser settings.
+  };
   // Funtcions to determine the background and text color based on the parameter just for a nice UI.
   const getSeverityColor = (severity) => {
     switch (severity) {
@@ -206,7 +221,7 @@ export default function IncidentEvents() {
                 type="text"
                 disabled={true}
                 placeholder="Loading created at..."
-                value={createdAt}
+                value={formatDateTime(createdAt)}
                 className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -218,7 +233,7 @@ export default function IncidentEvents() {
                 type="text"
                 disabled={true}
                 placeholder="Loading last updated at..."
-                value={updatedAt}
+                value={formatDateTime(updatedAt)}
                 className="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

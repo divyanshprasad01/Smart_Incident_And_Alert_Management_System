@@ -29,6 +29,22 @@ export default function ShowIncidents() {
     oneTimeFetch();
   }, []);
 
+  // Helper function to fix time zones and display the local time insted of UTC which is sent by the backend API.
+  const formatDateTime = (dateTimeString) => {
+    if(!dateTimeString) return "N/A"; // Handle null or undefined values
+    // Append 'Z' to indicate that the time is in UTC and create a Date object.
+    const date = new Date(dateTimeString + "Z");
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }); // This will convert the UTC time to local time based on the user's browser settings.
+  };
+
   // Helper function to determine the background and text color based on the provided parameters.
   const getSeverityColor = (severity) => {
     switch (severity) {
@@ -99,7 +115,7 @@ export default function ShowIncidents() {
               >
                 <td className="p-3 font-medium">{incident.id}</td>
                 <td className="p-3 text-gray-500 text-sm">
-                  {incident.creationDateTime}
+                  {formatDateTime(incident.creationDateTime)}
                 </td>
                 <td className="p-3">{incident.userId}</td>
                 <td className="p-3">{incident.subject}</td>
@@ -125,7 +141,7 @@ export default function ShowIncidents() {
                 </td>
 
                 <td className="p-3 text-gray-500 text-sm">
-                  {incident.lastUpdatedDateTime}
+                  {formatDateTime(incident.lastUpdatedDateTime)}
                 </td>
               </tr>
             ))}
