@@ -3,12 +3,15 @@ import api from "../Api/axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth } from "../Contexts/AuthContext";
 
 // Login form component
 export default function Login({ onSwitchForm }) {
   // State variables for email and password fields.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { setAuthentication } = useAuth();
 
   const navigate = useNavigate();
 
@@ -33,12 +36,25 @@ export default function Login({ onSwitchForm }) {
     try {
       // Using axios to send a POST request to the login endpoint with the required body.
       const response = await api.post("/auth/login", { email, password });
-      console.log("Login response:", response.data); // Debugging log
+      // console.log("Login response:", response.data); // Debugging log
       // Extaracts the token from the response and stores it in localStorage and names it "authToken".
       const token = response.data.token;
       localStorage.setItem("authToken", token);
       // displays a success toast using react hot toast to inform the user that login was successful.
       toast.success("Login successful!");
+
+      // Sets the authentication state in the AuthContext with the user data and token.
+      // Sets user data with email and sum dummy data for now as the backend is not providing any user data in the response it just provides a token for now.
+      // Later will add a function to fetch user data using the token and will pass only token here and will fetch the user in authContext and set the user data there.
+      setAuthentication(
+        {
+        name: "Divyansh Prasad", 
+        email: email, 
+        mobileNumber: 9999999999, 
+        userSince : "20-08-2001"
+        }
+        , token);
+
       // Navigates the user to the dashboard page after successful login.
       navigate("/incidents");
     } catch (error) {
