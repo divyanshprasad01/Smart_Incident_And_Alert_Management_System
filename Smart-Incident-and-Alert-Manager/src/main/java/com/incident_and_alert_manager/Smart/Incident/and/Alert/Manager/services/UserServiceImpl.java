@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
 //      encoding user password before storing in database.
         user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setUserRole(role);
         user.setIsAccountLocked(false);
         user.setIsPasswordExpired(false);
 

@@ -1,10 +1,7 @@
 package com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.controllers;
 
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.Components.JwtUtil;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.AuthResponseDto;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserDetailsDto;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserLoginDto;
-import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.UserSignUpDto;
+import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.DTOs.*;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.models.User;
 import com.incident_and_alert_manager.Smart.Incident.and.Alert.Manager.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +55,19 @@ public class AuthController {
         return new AuthResponseDto(jwtToken);
     }
 
-//    Need to implement this function later.
-//    @PostMapping
-//    public Long getUserId(@RequestBody String JwtToken) {
-//        Long userId = jwtUtil.extractUsername(JwtToken);
-//        return userId;
-//    }
+    @PostMapping("/getUserByEmail")
+    public UserDetailsDto getUserByEmail(@RequestBody getUserByEmailDto getUserByEmailDto) {
+        User user = userService.getUserByEmail(getUserByEmailDto.getEmail());
+        return mapUserDetails(user);
+    }
+
+    @PostMapping("/getUserByAuthToken")
+    public UserDetailsDto getUserByAuthToken(@RequestBody getUserByAuthTokenDto getUserByAuthTokenDto) {
+//      Very important observation.
+//      username in JWT token is equal to email. i.e a unique identifier user name != username.
+        User user = userService.getUserByEmail(jwtUtil.extractUsername(getUserByAuthTokenDto.getAuthToken()));
+        return mapUserDetails(user);
+    }
 
 
     private UserDetailsDto mapUserDetails(User user) {
