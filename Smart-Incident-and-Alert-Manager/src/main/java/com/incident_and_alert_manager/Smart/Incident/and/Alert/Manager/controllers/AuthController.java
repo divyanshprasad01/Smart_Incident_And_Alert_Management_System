@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 //Endpoint for authentication of a user using spring security
+//No need for any authorization for accessing any endpoint of this controller.
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
