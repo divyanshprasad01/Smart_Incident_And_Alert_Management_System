@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // This components Renders a simple forgot password form with and email field and a submit button it also includes a link to switch to signup form.
 // This is still using classic navigation technique and not using react router dom later will change it to use react router dom.
 // It does nothing right now functionality to be implemented later right now it is just a UI component.
-export default function ForgotPassword({ onSwitchForm }) {
-  
+export default function ForgotPassword() {
+  const navigate = useNavigate();
+
   // To hold the input value.
   const [email, setEmail] = useState("");
 
@@ -38,7 +40,7 @@ export default function ForgotPassword({ onSwitchForm }) {
       <p className="text-sm text-center mt-4">
         Don’t have an account?{" "}
         <span
-          onClick={() => onSwitchForm("signup")}
+          onClick={() => navigate("/auth/signup")}
           className="text-blue-600 cursor-pointer hover:underline"
         >
           Sign up

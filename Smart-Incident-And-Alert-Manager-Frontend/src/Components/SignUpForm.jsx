@@ -1,11 +1,13 @@
 import { useState } from "react";
 import api from "../Api/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 // A Sign up component which allows to create a new user.
-export default function SignUp({ onSwitchForm }) {
+export default function SignUp() {
   // State variables to hold the form data.
   const [name, setName] = useState("");
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,7 +33,7 @@ export default function SignUp({ onSwitchForm }) {
 
       toast.success("Account created successfully!");
       // Switches to the login form after a successful signup.
-      onSwitchForm("login");
+      navigate("/auth/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to create account");
     }
@@ -103,7 +105,7 @@ export default function SignUp({ onSwitchForm }) {
       <p className="text-sm text-center mt-4">
         Already have an account?{" "}
         <span
-          onClick={() => onSwitchForm("login")}
+          onClick={() => navigate("/auth/login")}
           className="text-blue-600 cursor-pointer hover:underline"
         >
           Login

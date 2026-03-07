@@ -17,8 +17,9 @@ function App() {
         {/* Using react router dom to route between different pages */}
         <Routes>
           <Route path="/auth/*" element={<AuthPage />} />
+          <Route path="/auth" element={<Navigate to="/auth/login" replace />} /> {/* Redirect root to login */}
           {/* If user opens any other route which is not defiend it automatically redirects to the auth page */}
-          <Route path="/*" element={<Navigate to="/auth" replace />} />
+          <Route path="/*" element={<Navigate to="/auth/login" replace />} />
           <Route path="/incidents/*" element={<Incidents />} />
         </Routes>
       </div>

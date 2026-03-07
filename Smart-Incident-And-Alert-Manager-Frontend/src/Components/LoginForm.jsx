@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useAuth } from "../Contexts/AuthContext";
 
 // Login form component
-export default function Login({ onSwitchForm }) {
+export default function Login() {
   // State variables for email and password fields.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,9 @@ export default function Login({ onSwitchForm }) {
     const authtoken = localStorage.getItem("authToken");
     if (authtoken) {
       navigate("/incidents"); // Redirect to dashboard if already logged in
-      toast.success("Welcome back!! You are already logged in. Redirecting to dashboard...");
+      toast.success(
+        "Welcome back!! You are already logged in. Redirecting to dashboard...",
+      );
     }
   }, [navigate]);
 
@@ -84,9 +86,9 @@ export default function Login({ onSwitchForm }) {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {/* A forgot password link to switch to forgot password component will later use react router dom to handle these switches */}
+          {/* A forgot password link to switch to forgot password component*/}
           <span
-            onClick={() => onSwitchForm("forgotPassword")}
+            onClick={() => navigate("/auth/forgot-password")}
             className="block text-right w-full text-sm mt-1 text-blue-600 cursor-pointer hover:underline"
           >
             Forgot password?
@@ -101,11 +103,11 @@ export default function Login({ onSwitchForm }) {
           Login
         </button>
       </form>
-      {/* A link to switch to signup form will later handle this using react router dom */}
+      {/* A link to switch to signup form */}
       <p className="text-sm text-center mt-4">
         Don’t have an account?{" "}
         <span
-          onClick={() => onSwitchForm("signup")}
+          onClick={() => navigate("/auth/signup")}
           className="text-blue-600 cursor-pointer hover:underline"
         >
           Sign up
